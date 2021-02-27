@@ -1,7 +1,9 @@
 <template>
   <main class="container">
-    <Header title="Todo List" />
-    <AddTask @add-task="addTask" />
+    <Header @show-form="showForm" title="Todo List" :showAddForm="showAddForm" />
+    <div v-if="showAddForm">
+      <AddTask @add-task="addTask" /> 
+    </div>
     <Tasks @delete-task="deleteTask" :tasks="tasks" />
   </main>
 </template>
@@ -20,10 +22,14 @@ export default {
   },
   data(){
     return{
-      tasks: []
+      tasks: [],
+      showAddForm: false
     }
   },
   methods: {
+    showForm(){
+      this.showAddForm = !this.showAddForm
+    },
     addTask(task){
       this.tasks = [task, ...this.tasks]
     },
@@ -82,7 +88,6 @@ body{
   color: #fff;
   border: none;
   padding: 10px 20px;
-  margin: 5px;
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;

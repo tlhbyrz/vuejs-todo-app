@@ -1,7 +1,7 @@
 <template>
     <header>
         <h1>{{ title }}</h1>
-        <Button text="Add task" @click="onClick"/>
+        <Button @show-form="$emit('show-form')" :text="showAddForm ? 'Close' : 'Add Task'" :color="showAddForm ? '#DE4436' : '#00C9A7'"/>
     </header>
 </template>
 
@@ -11,16 +11,13 @@ import Button from "./Button"
 export default{
     name: "Header",
     props: {
-        title: String
+        title: String,
+        showAddForm: Boolean
     },
     components:{
         Button
     },
-    methods: {
-        onClick() {
-            alert("test")
-        }
-    }    
+    emits: ["show-form"]    
 }
 </script>
 
