@@ -1,16 +1,57 @@
 <template>
   <main class="container">
-    <Header />
+    <Header title="Todo List" />
+    <AddTask @add-task="addTask" />
+    <Tasks @delete-task="deleteTask" :tasks="tasks" />
   </main>
 </template>
 
 <script>
-import Header from './components/Header.vue';
+import Header from './components/Header';
+import Tasks from './components/Tasks';
+import AddTask from './components/AddTask';
 
 export default {
   name: 'App',
   components: {
-    Header
+    Header,
+    Tasks,
+    AddTask
+  },
+  data(){
+    return{
+      tasks: []
+    }
+  },
+  methods: {
+    addTask(task){
+      this.tasks = [task, ...this.tasks]
+    },
+    deleteTask(id){
+      this.tasks = this.tasks.filter(task => task.id !== id)
+    }
+  },
+  created(){
+    this.tasks = [
+      {
+        id: 1,
+        text: "Vue dökümantasyonunu incele",
+        date: "1st March at 2pm",
+        reminder: true
+      },
+      {
+        id: 2,
+        text: "Doktor randevusu",
+        date: "6st March at 8pm",
+        reminder: false
+      },
+      {
+        id: 3,
+        text: "Arabayı tamire götür",
+        date: "13st March at 1pm",
+        reminder: true
+      },
+    ]
   }
 }
 </script>
@@ -33,5 +74,30 @@ body{
   max-width: 600px;
   margin: 0 auto;
   padding: 0 10px;
+}
+
+.btn {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+.btn:focus {
+  outline: none;
+}
+.btn:active {
+  transform: scale(0.98);
+}
+.btn-block {
+  display: block;
+  width: 100%;
 }
 </style>

@@ -1,12 +1,26 @@
 <template>
     <header>
-        <h1>Todo List</h1>
+        <h1>{{ title }}</h1>
+        <Button text="Add task" @click="onClick"/>
     </header>
 </template>
 
 <script>
+import Button from "./Button"
+
 export default{
-    name: "Header"    
+    name: "Header",
+    props: {
+        title: String
+    },
+    components:{
+        Button
+    },
+    methods: {
+        onClick() {
+            alert("test")
+        }
+    }    
 }
 </script>
 
