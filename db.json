@@ -1,0 +1,22 @@
+{
+  "tasks": [
+    {
+      "id": 2,
+      "text": "Doktor randevusu",
+      "date": "6st March at 8pm",
+      "reminder": false
+    },
+    {
+      "id": 3,
+      "text": "Arabayı tamire götür",
+      "date": "13st March at 1pm",
+      "reminder": true
+    },
+    {
+      "text": "Projeyi bitir",
+      "date": "12 March at 3am",
+      "reminder": true,
+      "id": 4
+    }
+  ]
+}

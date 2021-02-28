@@ -30,34 +30,60 @@ export default {
     showForm(){
       this.showAddForm = !this.showAddForm
     },
-    addTask(task){
-      this.tasks = [task, ...this.tasks]
+    async addTask(task){
+      const res = await fetch("api/tasks", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json"
+        },
+        body: JSON.stringify(task)
+      })
+
+      const data = await res.json();
+
+      this.tasks = [data, ...this.tasks]
     },
-    deleteTask(id){
-      this.tasks = this.tasks.filter(task => task.id !== id)
+    async deleteTask(id){
+      const res = await fetch(`api/tasks/${id}`, {
+        method: "DELETE"
+      })
+
+      if(res.status === 200){
+        this.tasks = this.tasks.filter(task => task.id !== id);
+      }else{
+        alert("Hata oluştu!");
+      }
+    },
+    async updateTask(id){
+      const task = await this.fetchTask(id);
+      const updated = { ...task, date: "3st March at 1pm" }
+
+      const res = await fetch(`api/tasks/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json"
+        },
+        body: JSON.stringify(updated)
+      })
+
+      const data = await res.json()
+      this.tasks = this.tasks.map(task => task.id !== id ? task : data);
+    },
+    async fetchTasks(){
+      const res = await fetch("api/tasks");
+      const data = await res.json();
+
+      return data;
+    },
+    async fetchTask(id){
+      const res = await fetch(`api/tasks/${id}`);
+      const data = await res.json();
+
+      return data;
     }
   },
-  created(){
-    this.tasks = [
-      {
-        id: 1,
-        text: "Vue dökümantasyonunu incele",
-        date: "1st March at 2pm",
-        reminder: true
-      },
-      {
-        id: 2,
-        text: "Doktor randevusu",
-        date: "6st March at 8pm",
-        reminder: false
-      },
-      {
-        id: 3,
-        text: "Arabayı tamire götür",
-        date: "13st March at 1pm",
-        reminder: true
-      },
-    ]
+  async created(){
+    this.tasks = await this.fetchTasks();
   }
 }
 </script>
